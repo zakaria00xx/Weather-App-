@@ -19,28 +19,27 @@ function getWeather() {
     return;
   }
 
-  fetch(`http://api.weatherapi.com/v1/current.json?key=3329cc7206cf42ae960135520252307&q=${findC}`)
-    .then(response => response.json())
-    .then(data => {
-      if (data.error) {
-        errorMessage.style.display = "block";
-        errorMessage.textContent = "City not found. Please try again!";
-        return;
-      }
-      
-      errorMessage.style.display = "none"; // Hide error message on success
-
-      let name = data.location.name;
-      let newTemp = `${data.current.temp_c} ℃`;
-      let newIcon = "https:" + data.current.condition.icon;
-
-      icon.src = newIcon;
-      city.textContent = name;
-      temp.textContent = newTemp;
-    })
-    .catch(error => {
+  fetch(`https://api.weatherapi.com/v1/current.json?key=3329cc7206cf42ae960135520252307&q=${findC}`)
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
       errorMessage.style.display = "block";
-      errorMessage.textContent = "Sorry, we got an error!";
-      console.error(error);
-    });
-}
+      errorMessage.textContent = "City not found. Please try again!";
+      return;
+    }
+    
+    errorMessage.style.display = "none"; // Hide error message on success
+
+    let name = data.location.name;
+    let newTemp = `${data.current.temp_c} ℃`;
+    let newIcon = "https:" + data.current.condition.icon;
+
+    icon.src = newIcon;
+    city.textContent = name;
+    temp.textContent = newTemp;
+  })
+  .catch(error => {
+    errorMessage.style.display = "block";
+    errorMessage.textContent = "Sorry, we got an error!";
+    console.error(error);
+  });
